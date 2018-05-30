@@ -1,0 +1,1159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`For component like source Bails if mockExternalIdentifier exist 1`] = `
+"(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"a\\",
+    type: \\"default\\",
+    fullPath: \\"\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+import A from \\"a\\";
+import { B } from \\"../b\\";
+import * as C from \\"c/test\\";
+
+const Element = () => React.createElement(\\"div\\", null);
+
+React.createElement(A, null);
+React.createElement(B, null, React.createElement(\\"div\\", null));
+React.createElement(B.B1, null);
+React.createElement(C.C1, null);"
+`;
+
+exports[`For component like source Does not append imported if not used in HOC as argument 1`] = `
+"import A from \\"a\\";
+import styled from \\"styled\\";
+import C from \\"../c\\";
+const StyledA = styled(A)\`\`;
+const Comp = styled(\\"div\\")\`\`;
+const StyledB = A;
+const K = C.A.B;
+React.createElement(StyledA, null);
+React.createElement(Comp, null);
+React.createElement(StyledB, null);
+React.createElement(K, null);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.A.B\\",
+  path: \\"../c\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Does not append imported if not used in HOC as argument 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+var _c = _interopRequireDefault(require(\\"../c\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+const Comp =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp1\\"
+})();
+const StyledB = _a.default;
+const K = _c.default.A.B;
+React.createElement(StyledA, null);
+React.createElement(Comp, null);
+React.createElement(StyledB, null);
+React.createElement(K, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.A.B\\",
+  path: \\"../c\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Does not import inside in tagged template 1`] = `
+"import A from \\"a\\";
+import styled from \\"styled\\";
+import theme from \\"../theme\\";
+const StyledA = styled(A)\`
+            color: \${theme.color.black};
+        \`;
+React.createElement(StyledA, null);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Does not import inside in tagged template 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+var _theme = _interopRequireDefault(require(\\"../theme\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})(\\"color:\\", _theme.default.color.black, \\";\\");
+React.createElement(StyledA, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Does not import inside in tagged template 2 1`] = `
+"import { A, B } from \\"some-lib\\";
+import styled, { theme } from \\"styled\\";
+const StyledA = styled(A)\`
+            color: \${theme.color.black};
+        \`;
+const StyledB = styled(B)\`
+            color: \${theme.color.white};
+        \`;
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}];"
+`;
+
+exports[`For component like source Does not import inside in tagged template 2 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _someLib = require(\\"some-lib\\");
+
+var _styled = _interopRequireWildcard(require(\\"styled\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_someLib.A, {
+  target: \\"e1h80wsp0\\"
+})(\\"color:\\", _styled.theme.color.black, \\";\\");
+const StyledB =
+/*#__PURE__*/
+(0, _styled.default)(_someLib.B, {
+  target: \\"e1h80wsp1\\"
+})(\\"color:\\", _styled.theme.color.white, \\";\\");
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Real source 1 1`] = `
+"import { ModalCloseIcon, ModalHeader } from \\"@ramble/ramble-ui\\";
+import React from \\"react\\";
+import styled, { theme } from \\"../../theme\\";
+const MapHeader = styled(ModalHeader)\`
+            padding-bottom: 0.5rem;
+            border-bottom: 0;
+
+            /* since modal will be basic and dimmed we need contrast color of dimmmer */
+            color: \${theme.getContrastTextColor(theme.dimmer.black).string()};
+            justify-content: space-between;
+        \`;
+const CloseIcon = styled(ModalCloseIcon)\`
+            color: \${theme.getContrastTextColor(theme.dimmer.black).string()};
+            padding: 0;
+            margin: 0;
+        \`;
+React.createElement(MapHeader, null);
+React.createElement(CloseIcon, null);
+export const Mocks = [{
+  identifier: \\"ModalHeader\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"ModalCloseIcon\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}];"
+`;
+
+exports[`For component like source Real source 1 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _rambleUi = require(\\"@ramble/ramble-ui\\");
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _theme = _interopRequireWildcard(require(\\"../../theme\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const MapHeader =
+/*#__PURE__*/
+(0, _theme.default)(_rambleUi.ModalHeader, {
+  target: \\"e1h80wsp0\\"
+})(\\"padding-bottom:0.5rem;border-bottom:0;/* since modal will be basic and dimmed we need contrast color of dimmmer */\\\\n            color:\\", _theme.theme.getContrastTextColor(_theme.theme.dimmer.black).string(), \\";justify-content:space-between;\\");
+const CloseIcon =
+/*#__PURE__*/
+(0, _theme.default)(_rambleUi.ModalCloseIcon, {
+  target: \\"e1h80wsp1\\"
+})(\\"color:\\", _theme.theme.getContrastTextColor(_theme.theme.dimmer.black).string(), \\";padding:0;margin:0;\\");
+
+_react.default.createElement(MapHeader, null);
+
+_react.default.createElement(CloseIcon, null);
+
+const Mocks = [{
+  identifier: \\"ModalHeader\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"ModalCloseIcon\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Real source 2 1`] = `
+"import Scrollbar from \\"react-smooth-scrollbar\\";
+import { MessagesContentContainer } from \\"../Elements\\";
+const StyledScrollbar = MessagesContentContainer.withComponent(Scrollbar);
+React.createElement(StyledScrollbar, null);
+export const Mocks = [{
+  identifier: \\"Scrollbar\\",
+  path: \\"react-smooth-scrollbar\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Real source 2 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _reactSmoothScrollbar = _interopRequireDefault(require(\\"react-smooth-scrollbar\\"));
+
+var _Elements = require(\\"../Elements\\");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledScrollbar = _Elements.MessagesContentContainer.withComponent(_reactSmoothScrollbar.default, {
+  target: \\"e1gwevx0\\"
+});
+
+React.createElement(StyledScrollbar, null);
+const Mocks = [{
+  identifier: \\"Scrollbar\\",
+  path: \\"react-smooth-scrollbar\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Real source 3 1`] = `
+"\\"use strict\\";
+
+import React from \\"react\\";
+import styled from \\"../../../theme\\";
+import { HeaderDropdownMenu } from \\"../HeaderDropdownMenu\\"; // Like processed by emotion/styled-components babel plugin
+
+const MenuItem =
+/*#__PURE__*/
+styled(HeaderDropdownMenu, {
+  label: \\"MenuItem\\",
+  target: \\"ev6xfg12\\"
+})(\\"padding:11px 16px;width:100%;display:flex;flex-flow:column nowrap;justify-content:flex-start;align-items:stretch;& > .toggle{margin-left:1em;}\\");
+
+function TeamStatusItem(props) {
+  return React.createElement(MenuItem, null);
+}
+
+export const Mocks = [{
+  identifier: \\"HeaderDropdownMenu\\",
+  path: \\"../HeaderDropdownMenu\\",
+  type: \\"name\\"
+}];"
+`;
+
+exports[`For component like source Real source 3 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _theme = _interopRequireDefault(require(\\"../../../theme\\"));
+
+var _HeaderDropdownMenu = require(\\"../HeaderDropdownMenu\\");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Like processed by emotion/styled-components babel plugin
+const MenuItem =
+/*#__PURE__*/
+
+/*#__PURE__*/
+(0, _theme.default)(_HeaderDropdownMenu.HeaderDropdownMenu, {
+  label: \\"MenuItem\\",
+  target: \\"ev6xfg12\\",
+  target: \\"e1h80wsp0\\"
+})(\\"padding:11px 16px;width:100%;display:flex;flex-flow:column nowrap;justify-content:flex-start;align-items:stretch;& > .toggle{margin-left:1em;}\\");
+
+function TeamStatusItem(props) {
+  return _react.default.createElement(MenuItem, null);
+}
+
+const Mocks = [{
+  identifier: \\"HeaderDropdownMenu\\",
+  path: \\"../HeaderDropdownMenu\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for HOC like components 1`] = `
+"import A from \\"a\\";
+import styled from \\"styled\\";
+const StyledA = styled(A)\`\`;
+const StyledB = styled(A.B);
+const StyledC = styled(A.C, {});
+const StyledD = styled(A.D, {})\`font-size: 8em;\`;
+React.createElement(A, null);
+
+class K extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+  }
+
+}
+
+React.createElement(K, null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Works for HOC like components 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+const StyledB = (0, _styled.default)(_a.default.B);
+const StyledC = (0, _styled.default)(_a.default.C, {});
+const StyledD =
+/*#__PURE__*/
+(0, _styled.default)(_a.default.D, {
+  target: \\"e1h80wsp1\\"
+})(\\"font-size:8em;\\");
+React.createElement(_a.default, null);
+
+class K extends React.Component {
+  render() {
+    return React.createElement(\\"div\\", null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+  }
+
+}
+
+React.createElement(K, null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for JSX expressions 1`] = `
+"import A from \\"a\\";
+import { B } from \\"../b\\";
+import * as C from \\"c/test\\";
+
+const Element = () => React.createElement(\\"div\\", null);
+
+React.createElement(A, null);
+React.createElement(A.A1, null);
+React.createElement(B, null, React.createElement(\\"div\\", null));
+React.createElement(B.B1, null);
+React.createElement(C.C1, null);
+React.createElement(C.C1.C2, null);
+React.createElement(C.C2.C3.C4, null);
+
+class K extends React.Component {
+  render() {
+    React.createElement(Element, null);
+    return React.createElement(A, null, React.createElement(B.B1, null, React.createElement(C.C1, null)));
+  }
+
+}
+
+React.createElement(K, null, React.createElement(A, null));
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.A1\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B.B1\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C1.C2\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C2.C3.C4\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}];"
+`;
+
+exports[`For component like source Works for JSX expressions 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _b = require(\\"../b\\");
+
+var C = _interopRequireWildcard(require(\\"c/test\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Element = () => React.createElement(\\"div\\", null);
+
+React.createElement(_a.default, null);
+React.createElement(_a.default.A1, null);
+React.createElement(_b.B, null, React.createElement(\\"div\\", null));
+React.createElement(_b.B.B1, null);
+React.createElement(C.C1, null);
+React.createElement(C.C1.C2, null);
+React.createElement(C.C2.C3.C4, null);
+
+class K extends React.Component {
+  render() {
+    React.createElement(Element, null);
+    return React.createElement(_a.default, null, React.createElement(_b.B.B1, null, React.createElement(C.C1, null)));
+  }
+
+}
+
+React.createElement(K, null, React.createElement(_a.default, null));
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.A1\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B.B1\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C1.C2\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C2.C3.C4\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for member expression without HOC 1`] = `
+"import A from \\"a\\";
+import * as B from \\"b\\";
+const FakeA = A.B;
+const FakeB = B.C.D;
+React.createElement(FakeA, null);
+React.createElement(FakeB, null);
+export const Mocks = [{
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B.C.D\\",
+  path: \\"b\\",
+  type: \\"namespace\\"
+}];"
+`;
+
+exports[`For component like source Works for member expression without HOC 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var B = _interopRequireWildcard(require(\\"b\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const FakeA = _a.default.B;
+const FakeB = B.C.D;
+React.createElement(FakeA, null);
+React.createElement(FakeB, null);
+const Mocks = [{
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B.C.D\\",
+  path: \\"b\\",
+  type: \\"namespace\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for nested member expressions inside HOC 1`] = `
+"import A from \\"a\\";
+import styled from \\"styled\\";
+const Styled = styled(A.B.C);
+React.createElement(Styled, null);
+export const Mocks = [{
+  identifier: \\"A.B.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Works for nested member expressions inside HOC 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Styled = (0, _styled.default)(_a.default.B.C);
+React.createElement(Styled, null);
+const Mocks = [{
+  identifier: \\"A.B.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works when HOC component was used in HOC for other component 1`] = `
+"import A from \\"a\\";
+import styled from \\"styled\\";
+const StyledA = styled(A)\`
+            font-size: 1em;
+        \`;
+const StyledB = styled(StyledA)\`
+            width: 50px;
+        \`;
+const StyledC = styled(StyledB)\`
+            height: 60px;
+        \`;
+const StyledD = HOC(StyledA);
+const StyledE = HOC({}, StyledB);
+const StyledF = HOC(StyledE, {});
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Works when HOC component was used in HOC for other component 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})(\\"font-size:1em;\\");
+const StyledB =
+/*#__PURE__*/
+(0, _styled.default)(StyledA, {
+  target: \\"e1h80wsp1\\"
+})(\\"width:50px;\\");
+const StyledC =
+/*#__PURE__*/
+(0, _styled.default)(StyledB, {
+  target: \\"e1h80wsp2\\"
+})(\\"height:60px;\\");
+const StyledD = HOC(StyledA);
+const StyledE = HOC({}, StyledB);
+const StyledF = HOC(StyledE, {});
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works with TS annotations 1`] = `
+"import { A } from \\"a\\";
+import styled from \\"styled\\";
+const StyledA = A;
+React.createElement(StyledA, null);
+const StyledB = styled(A);
+React.createElement(StyledB, null);
+const StyledC = styled(A)\`\`;
+React.createElement(StyledC, null);
+const StyledD = styled(A);
+React.createElement(StyledD, null);
+const StyledE = styled(A)\`\`;
+React.createElement(StyledE, null);
+const StyledF = styled(A);
+React.createElement(StyledF, null);
+const StyledG = styled.withComponent(A);
+React.createElement(StyledG, null);
+const StyledH = styled.withComponent(A)\`\`;
+React.createElement(StyledH, null);
+const StyledK = styled.withComponent(A)\`\`;
+React.createElement(StyledK, null);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"name\\"
+}];"
+`;
+
+exports[`For component like source Works with TS annotations 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = require(\\"a\\");
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA = _a.A;
+React.createElement(StyledA, null);
+const StyledB = (0, _styled.default)(_a.A);
+React.createElement(StyledB, null);
+const StyledC =
+/*#__PURE__*/
+(0, _styled.default)(_a.A, {
+  target: \\"e1gwevx0\\"
+})();
+React.createElement(StyledC, null);
+const StyledD = (0, _styled.default)(_a.A);
+React.createElement(StyledD, null);
+const StyledE =
+/*#__PURE__*/
+(0, _styled.default)(_a.A, {
+  target: \\"e1gwevx1\\"
+})();
+React.createElement(StyledE, null);
+const StyledF = (0, _styled.default)(_a.A);
+React.createElement(StyledF, null);
+const StyledG =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx2\\"
+})(_a.A);
+React.createElement(StyledG, null);
+const StyledH =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx3\\"
+})(_a.A)\`\`;
+React.createElement(StyledH, null);
+const StyledK =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx4\\"
+})(_a.A)\`\`;
+React.createElement(StyledK, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For test like source Does not do anything for non imported identifier 1`] = `
+"(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+import A from \\"../a\\";
+const B = {};
+mockExternalComponents(B);
+it(\\"test\\", () => {
+  expect(render(React.createElement(A, null))).toMatchSnapshot();
+});"
+`;
+
+exports[`For test like source Does not do anything for non imported identifier 2`] = `
+"\\"use strict\\";
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/Users/asvetl/work/jest-mock-external-components/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+var _a = _interopRequireDefault(require(\\"../a\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const B = {};
+mockExternalComponents(B);
+it(\\"test\\", () => {
+  expect(render(React.createElement(_a.default, null))).toMatchSnapshot();
+});"
+`;
+
+exports[`For test like source Process mockExternalComponents call 1`] = `
+"(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"B\\",
+    path: \\"b\\",
+    type: \\"name\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"C\\",
+    path: \\"../../c\\",
+    type: \\"namespace\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+import A from \\"../a\\";
+import { B } from \\"b\\";
+import * as C from \\"../../c\\";
+import render from \\"renderer\\";
+it(\\"test\\", () => {
+  expect(render(React.createElement(A, null))).toMatchSnapshot();
+});"
+`;
+
+exports[`For test like source Process mockExternalComponents call 2`] = `
+"\\"use strict\\";
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"B\\",
+    path: \\"b\\",
+    type: \\"name\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"C\\",
+    path: \\"../../c\\",
+    type: \\"namespace\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+var _a = _interopRequireDefault(require(\\"../a\\"));
+
+var _b = require(\\"b\\");
+
+var C = _interopRequireWildcard(require(\\"../../c\\"));
+
+var _renderer = _interopRequireDefault(require(\\"renderer\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+it(\\"test\\", () => {
+  expect((0, _renderer.default)(React.createElement(_a.default, null))).toMatchSnapshot();
+});"
+`;
+
+exports[`For test like source Throws error for non identifier 1`] = `"Invalid argument passed to mockExternalComponents"`;
+
+exports[`For test like source Throws error for non identifier 2`] = `"Invalid argument passed to mockExternalComponents"`;
+
+exports[`For test like source Works for 2 identifiers from same file 1`] = `
+"(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"B\\",
+    path: \\"../a\\",
+    type: \\"name\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"C\\",
+    path: \\"../a\\",
+    type: \\"name\\",
+    fullPath: \\"/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+import A, { B, C, D } from \\"../a\\";
+it(\\"test\\", () => {
+  expect(render(React.createElement(A, null))).toMatchSnapshot();
+});"
+`;
+
+exports[`For test like source Works for 2 identifiers from same file 2`] = `
+"\\"use strict\\";
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"A\\",
+    path: \\"../a\\",
+    type: \\"default\\",
+    fullPath: \\"/Users/asvetl/work/jest-mock-external-components/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"B\\",
+    path: \\"../a\\",
+    type: \\"name\\",
+    fullPath: \\"/Users/asvetl/work/jest-mock-external-components/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+(function () {
+  const {
+    mockExternalComponents
+  } = require.requireActual(\\"jest-mock-external-components\\");
+
+  const mocks = mockExternalComponents({}, {
+    identifier: \\"C\\",
+    path: \\"../a\\",
+    type: \\"name\\",
+    fullPath: \\"/Users/asvetl/work/jest-mock-external-components/test.jsx\\"
+  });
+
+  for (const mock of mocks) {
+    jest.doMock(mock.path, mock.definition);
+  }
+})();
+
+var _a = _interopRequireWildcard(require(\\"../a\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+it(\\"test\\", () => {
+  expect(render(React.createElement(_a.default, null))).toMatchSnapshot();
+});"
+`;
