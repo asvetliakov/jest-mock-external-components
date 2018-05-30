@@ -4,6 +4,10 @@
   "description": "Mock external React components with jest",
   "main": "build/index.js",
   "types": "build/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asvetliakov/jest-mock-external-components"
+  },
   "author": "Alexey Svetliakov <devpieron@gmail.com>",
   "license": "MIT",
   "keywords": [
