@@ -1,6 +1,6 @@
 {
   "name": "jest-mock-external-components",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Mock external React components with jest",
   "main": "build/index.js",
   "types": "build/index.d.ts",
