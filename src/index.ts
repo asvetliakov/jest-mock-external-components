@@ -35,7 +35,7 @@ export function mockExternalComponents(component: any, definition?: TestMockDefi
         const main = require(fullPath);
         const mocks: TestMockDefinition[] = main["Mocks"];
         if (!mocks) {
-            return;
+            return mockDefinitions;
         }
         // flat mocks by module path
         const flattenMocks = mocks.reduce((flattened, mock) => {
