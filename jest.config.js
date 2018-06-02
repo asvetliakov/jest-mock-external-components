@@ -12,6 +12,7 @@ module.exports = {
         "/node_modules/",
         "/dist/",
         "/fixtures/",
+        "\\.d\\.ts$"
     ],
     moduleFileExtensions: [
         "ts",

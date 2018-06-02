@@ -97,6 +97,50 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Does not append imported if not used in HOC as argument 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+var _c = _interopRequireDefault(require(\\"../c\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+var Comp =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp1\\"
+})();
+var StyledB = _a.default;
+var K = _c.default.A.B;
+React.createElement(StyledA, null);
+React.createElement(Comp, null);
+React.createElement(StyledB, null);
+React.createElement(K, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.A.B\\",
+  path: \\"../c\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Does not import inside in tagged template 1`] = `
 "import A from \\"a\\";
 import styled from \\"styled\\";
@@ -202,6 +246,74 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Does not import inside in tagged template 2 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _someLib = require(\\"some-lib\\");
+
+var _styled = _interopRequireWildcard(require(\\"styled\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_someLib.A, {
+  target: \\"e1h80wsp0\\"
+})(\\"color:\\", _styled.theme.color.black, \\";\\");
+var StyledB =
+/*#__PURE__*/
+(0, _styled.default)(_someLib.B, {
+  target: \\"e1h80wsp1\\"
+})(\\"color:\\", _styled.theme.color.white, \\";\\");
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"some-lib\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Does not import inside in tagged template 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+var _theme = _interopRequireDefault(require(\\"../theme\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})(\\"color:\\", _theme.default.color.black, \\";\\");
+React.createElement(StyledA, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Real source 1 1`] = `
 "import { ModalCloseIcon, ModalHeader } from \\"@ramble/ramble-ui\\";
 import React from \\"react\\";
@@ -277,6 +389,51 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Real source 1 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _rambleUi = require(\\"@ramble/ramble-ui\\");
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _theme = _interopRequireWildcard(require(\\"../../theme\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MapHeader =
+/*#__PURE__*/
+(0, _theme.default)(_rambleUi.ModalHeader, {
+  target: \\"e1h80wsp0\\"
+})(\\"padding-bottom:0.5rem;border-bottom:0;/* since modal will be basic and dimmed we need contrast color of dimmmer */\\\\n            color:\\", _theme.theme.getContrastTextColor(_theme.theme.dimmer.black).string(), \\";justify-content:space-between;\\");
+var CloseIcon =
+/*#__PURE__*/
+(0, _theme.default)(_rambleUi.ModalCloseIcon, {
+  target: \\"e1h80wsp1\\"
+})(\\"color:\\", _theme.theme.getContrastTextColor(_theme.theme.dimmer.black).string(), \\";padding:0;margin:0;\\");
+
+_react.default.createElement(MapHeader, null);
+
+_react.default.createElement(CloseIcon, null);
+
+const Mocks = [{
+  identifier: \\"ModalHeader\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"ModalCloseIcon\\",
+  path: \\"@ramble/ramble-ui\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Real source 2 1`] = `
 "import Scrollbar from \\"react-smooth-scrollbar\\";
 import { MessagesContentContainer } from \\"../Elements\\";
@@ -304,6 +461,33 @@ var _Elements = require(\\"../Elements\\");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const StyledScrollbar = _Elements.MessagesContentContainer.withComponent(_reactSmoothScrollbar.default, {
+  target: \\"e1gwevx0\\"
+});
+
+React.createElement(StyledScrollbar, null);
+const Mocks = [{
+  identifier: \\"Scrollbar\\",
+  path: \\"react-smooth-scrollbar\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Real source 2 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _reactSmoothScrollbar = _interopRequireDefault(require(\\"react-smooth-scrollbar\\"));
+
+var _Elements = require(\\"../Elements\\");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledScrollbar = _Elements.MessagesContentContainer.withComponent(_reactSmoothScrollbar.default, {
   target: \\"e1gwevx0\\"
 });
 
@@ -367,6 +551,46 @@ const MenuItem =
   target: \\"ev6xfg12\\",
   target: \\"e1h80wsp0\\"
 })(\\"padding:11px 16px;width:100%;display:flex;flex-flow:column nowrap;justify-content:flex-start;align-items:stretch;& > .toggle{margin-left:1em;}\\");
+
+function TeamStatusItem(props) {
+  return _react.default.createElement(MenuItem, null);
+}
+
+const Mocks = [{
+  identifier: \\"HeaderDropdownMenu\\",
+  path: \\"../HeaderDropdownMenu\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Real source 3 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _react = _interopRequireDefault(require(\\"react\\"));
+
+var _theme = _interopRequireDefault(require(\\"../../../theme\\"));
+
+var _HeaderDropdownMenu = require(\\"../HeaderDropdownMenu\\");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// Like processed by emotion/styled-components babel plugin
+var MenuItem =
+/*#__PURE__*/
+
+/*#__PURE__*/
+(0, _theme.default)(_HeaderDropdownMenu.HeaderDropdownMenu, _defineProperty({
+  label: \\"MenuItem\\",
+  target: \\"ev6xfg12\\"
+}, \\"target\\", \\"e1h80wsp0\\"))(\\"padding:11px 16px;width:100%;display:flex;flex-flow:column nowrap;justify-content:flex-start;align-items:stretch;& > .toggle{margin-left:1em;}\\");
 
 function TeamStatusItem(props) {
   return _react.default.createElement(MenuItem, null);
@@ -450,6 +674,100 @@ class K extends React.Component {
   }
 
 }
+
+React.createElement(K, null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for HOC like components 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+require(\\"core-js/modules/es7.symbol.async-iterator\\");
+
+require(\\"core-js/modules/es6.symbol\\");
+
+require(\\"core-js/modules/es6.object.set-prototype-of\\");
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === \\"function\\" && typeof Symbol.iterator === \\"symbol\\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \\"function\\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \\"symbol\\" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\\"Cannot call a class as a function\\"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\\"value\\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \\"object\\" || typeof call === \\"function\\")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\\"this hasn't been initialised - super() hasn't been called\\"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== \\"function\\" && superClass !== null) { throw new TypeError(\\"Super expression must either be null or a function\\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+var StyledB = (0, _styled.default)(_a.default.B);
+var StyledC = (0, _styled.default)(_a.default.C, {});
+var StyledD =
+/*#__PURE__*/
+(0, _styled.default)(_a.default.D, {
+  target: \\"e1h80wsp1\\"
+})(\\"font-size:8em;\\");
+React.createElement(_a.default, null);
+
+var K =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(K, _React$Component);
+
+  function K() {
+    _classCallCheck(this, K);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(K).apply(this, arguments));
+  }
+
+  _createClass(K, [{
+    key: \\"render\\",
+    value: function render() {
+      return React.createElement(\\"div\\", null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
+    }
+  }]);
+
+  return K;
+}(React.Component);
 
 React.createElement(K, null, React.createElement(StyledA, null), React.createElement(StyledB, null), React.createElement(StyledC, null), React.createElement(StyledD, null));
 const Mocks = [{
@@ -596,6 +914,115 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Works for JSX expressions 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+require(\\"core-js/modules/es7.symbol.async-iterator\\");
+
+require(\\"core-js/modules/es6.symbol\\");
+
+require(\\"core-js/modules/es6.object.set-prototype-of\\");
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _b = require(\\"../b\\");
+
+var C = _interopRequireWildcard(require(\\"c/test\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === \\"function\\" && typeof Symbol.iterator === \\"symbol\\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \\"function\\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \\"symbol\\" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\\"Cannot call a class as a function\\"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\\"value\\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === \\"object\\" || typeof call === \\"function\\")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError(\\"this hasn't been initialised - super() hasn't been called\\"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== \\"function\\" && superClass !== null) { throw new TypeError(\\"Super expression must either be null or a function\\"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Element = function Element() {
+  return React.createElement(\\"div\\", null);
+};
+
+React.createElement(_a.default, null);
+React.createElement(_a.default.A1, null);
+React.createElement(_b.B, null, React.createElement(\\"div\\", null));
+React.createElement(_b.B.B1, null);
+React.createElement(C.C1, null);
+React.createElement(C.C1.C2, null);
+React.createElement(C.C2.C3.C4, null);
+
+var K =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(K, _React$Component);
+
+  function K() {
+    _classCallCheck(this, K);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(K).apply(this, arguments));
+  }
+
+  _createClass(K, [{
+    key: \\"render\\",
+    value: function render() {
+      React.createElement(Element, null);
+      return React.createElement(_a.default, null, React.createElement(_b.B.B1, null, React.createElement(C.C1, null)));
+    }
+  }]);
+
+  return K;
+}(React.Component);
+
+React.createElement(K, null, React.createElement(_a.default, null));
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.A1\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"B.B1\\",
+  path: \\"../b\\",
+  type: \\"name\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C1.C2\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}, {
+  identifier: \\"C.C2.C3.C4\\",
+  path: \\"c/test\\",
+  type: \\"namespace\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Works for member expression without HOC 1`] = `
 "import A from \\"a\\";
 import * as B from \\"b\\";
@@ -646,6 +1073,38 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Works for member expression without HOC 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var B = _interopRequireWildcard(require(\\"b\\"));
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FakeA = _a.default.B;
+var FakeB = B.C.D;
+React.createElement(FakeA, null);
+React.createElement(FakeB, null);
+const Mocks = [{
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"B.C.D\\",
+  path: \\"b\\",
+  type: \\"namespace\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Works for nested member expressions inside HOC 1`] = `
 "import A from \\"a\\";
 import styled from \\"styled\\";
@@ -673,6 +1132,30 @@ var _styled = _interopRequireDefault(require(\\"styled\\"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const Styled = (0, _styled.default)(_a.default.B.C);
+React.createElement(Styled, null);
+const Mocks = [{
+  identifier: \\"A.B.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for nested member expressions inside HOC 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Styled = (0, _styled.default)(_a.default.B.C);
 React.createElement(Styled, null);
 const Mocks = [{
   identifier: \\"A.B.C\\",
@@ -742,6 +1225,52 @@ const StyledC =
 const StyledD = HOC(StyledA);
 const StyledE = HOC({}, StyledB);
 const StyledF = HOC(StyledE, {});
+React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works when HOC component was used in HOC for other component 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})(\\"font-size:1em;\\");
+var StyledB =
+/*#__PURE__*/
+(0, _styled.default)(StyledA, {
+  target: \\"e1h80wsp1\\"
+})(\\"width:50px;\\");
+var StyledC =
+/*#__PURE__*/
+(0, _styled.default)(StyledB, {
+  target: \\"e1h80wsp2\\"
+})(\\"height:60px;\\");
+var StyledD = HOC(StyledA);
+var StyledE = HOC({}, StyledB);
+var StyledF = HOC(StyledE, {});
 React.createElement(StyledA, null);
 React.createElement(StyledB, null);
 React.createElement(StyledC, null);
@@ -835,6 +1364,90 @@ const StyledK =
 (0, _styled.default)(\\"withComponent\\", {
   target: \\"e1gwevx4\\"
 })(_a.A)\`\`;
+React.createElement(StyledK, null);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"name\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works with TS annotations 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+require(\\"core-js/modules/es6.object.freeze\\");
+
+var _a = require(\\"a\\");
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral([\\"\\"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral([\\"\\"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var StyledA = _a.A;
+React.createElement(StyledA, null);
+var StyledB = (0, _styled.default)(_a.A);
+React.createElement(StyledB, null);
+var StyledC =
+/*#__PURE__*/
+(0, _styled.default)(_a.A, {
+  target: \\"e1gwevx0\\"
+})();
+React.createElement(StyledC, null);
+var StyledD = (0, _styled.default)(_a.A);
+React.createElement(StyledD, null);
+var StyledE =
+/*#__PURE__*/
+(0, _styled.default)(_a.A, {
+  target: \\"e1gwevx1\\"
+})();
+React.createElement(StyledE, null);
+var StyledF = (0, _styled.default)(_a.A);
+React.createElement(StyledF, null);
+var StyledG =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx2\\"
+})(_a.A);
+React.createElement(StyledG, null);
+var StyledH =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx3\\"
+})(_a.A)(_templateObject());
+React.createElement(StyledH, null);
+var StyledK =
+/*#__PURE__*/
+(0, _styled.default)(\\"withComponent\\", {
+  target: \\"e1gwevx4\\"
+})(_a.A)(_templateObject2());
 React.createElement(StyledK, null);
 const Mocks = [{
   identifier: \\"A\\",

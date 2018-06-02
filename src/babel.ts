@@ -186,7 +186,7 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                 } else if (t.isJSXIdentifier(path.node.name)) {
                     const identifier = path.node.name.name;
                     const binding = path.scope.getBinding(identifier);
-                    if (!binding || (binding.kind !== "module" && binding.kind !== "const")) {
+                    if (!binding) {
                         return;
                     }
                     if (binding.kind === "module") {

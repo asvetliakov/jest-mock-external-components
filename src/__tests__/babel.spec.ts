@@ -31,6 +31,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Works for HOC like components", () => {
@@ -56,6 +77,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Does not append imported if not used in HOC as argument", () => {
@@ -79,6 +121,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Does not import inside in tagged template", () => {
@@ -97,6 +160,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Does not import inside in tagged template 2", () => {
@@ -118,6 +202,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
 
     });
 
@@ -150,6 +255,27 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Works for nested member expressions inside HOC", () => {
@@ -163,6 +289,27 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Works for member expression without HOC", () => {
@@ -178,6 +325,27 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     })
 
     it("Works with TS annotations", () => {
@@ -214,6 +382,28 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/typescript", "@babel/react"], filename: "test.tsx" }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/typescript", "@babel/react"], filename: "test.tsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/typescript",
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.tsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Real source 1", () => {
@@ -242,6 +432,27 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     })
 
     it("Real source 2", () => {
@@ -256,6 +467,28 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react", "@babel/typescript"], filename: "test.tsx" }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/typescript", "@babel/react"], filename: "test.tsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/typescript",
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.tsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Real source 3", () => {
@@ -282,6 +515,27 @@ describe("For component like source", () => {
         `;
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
         expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
     });
 
     it("Bails if mockExternalIdentifier exist", () => {
