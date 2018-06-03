@@ -10,9 +10,20 @@ export interface State {
     mockedIdentifiers: string[];
 }
 
-export default function plugin({ types: t, template: tmpl }: typeof b, options: { mockExternalIdentifier?: string } = {}): b.PluginObj<State> {
+export interface Options {
+    mockExternalIdentifier?: string;
+    alwaysMockIdentifiers?: string[];
+}
+
+const defaultAlwaysMockIdentifiers = [
+    "styled",
+    "withComponent"
+];
+
+export default function plugin({ types: t, template: tmpl }: typeof b, options: Options = {}): b.PluginObj<State> {
 
     const mockExternalIdentifier = options.mockExternalIdentifier || "mockExternalComponents";
+    const alwaysMockIdentifiers = options.alwaysMockIdentifiers || defaultAlwaysMockIdentifiers;
 
     const createNewIdentifierOrMemberExp = (node: t.Identifier | t.MemberExpression | t.JSXIdentifier | t.JSXMemberExpression): t.Identifier | t.MemberExpression => {
         if (t.isIdentifier(node) || t.isJSXIdentifier(node)) {
@@ -87,6 +98,29 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
         }
     }
 
+    const createEmptyMockExpression = (scope: bt.Scope): t.ExportNamedDeclaration => {
+        const mockExpression = t.exportNamedDeclaration(t.variableDeclaration("const", [t.variableDeclarator(t.identifier("Mocks"), t.arrayExpression([]))]), []);
+        if (scope.path.isProgram()) {
+            scope.path.node.body.push(mockExpression);
+        }
+        return mockExpression;
+    }
+
+    const pushMockObjExpression = (mockExp: t.ExportNamedDeclaration, name: string, binding: bt.Binding): void => {
+        const exportDecl = (mockExp.declaration as b.types.VariableDeclaration).declarations[0].init as b.types.ArrayExpression;
+        exportDecl.elements.push(t.objectExpression([
+            t.objectProperty(t.identifier("identifier"), t.stringLiteral(name)),
+            t.objectProperty(t.identifier("path"), t.stringLiteral((binding.path.parent as t.ImportDeclaration).source.value)),
+            t.objectProperty(t.identifier("type"), t.stringLiteral(
+                binding.path.isImportDefaultSpecifier()
+                    ? "default"
+                    : binding.path.isImportNamespaceSpecifier()
+                        ? "namespace"
+                        : "name",
+            ))
+        ]));
+    }
+
     const mockHelper = tmpl(`
     (function() {
         const { mockExternalComponents } = require.requireActual("jest-mock-external-components");
@@ -133,13 +167,6 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                     }
                     const type = binding.path.isImportDefaultSpecifier() ? "default" : binding.path.isImportNamespaceSpecifier() ? "namespace" : "name";
                     const modulePath = (binding.path.parent as t.ImportDeclaration).source.value;
-                    // remove old binding
-                    // path.scope.removeBinding(firstArgIdentifierName);
-                    // binding.path.remove();
-
-                    // reset identifier in first arg
-                    // path.node.arguments = [];
-                    // path.node.arguments.push(t.objectExpression([]));
 
                     // add definition
                     const objExp = t.objectExpression([
@@ -150,22 +177,36 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                     ]);
                     path.parentPath.replaceWith(mockHelper({ OBJECT_EXP: objExp }));
 
-                    // const variableDeclaration = t.variableDeclaration("const", [t.variableDeclarator(t.identifier(firstArgIdentifierName), path.node)]);
-                    // path.parentPath.insertAfter(variableDeclaration);
                     (path.parentPath.node as any)._blockHoist = 4;
-                    // path.parentPath.remove();
-                    // const callExp = t.callExpression(t.identifier(mockExternalIdentifier), [
-                    //     t.objectExpression([]),
-                    //     t.objectExpression([
-                    //         t.objectProperty(t.identifier("identifier"), t.stringLiteral(firstArgIdentifierName)),
-                    //         t.objectProperty(t.identifier("path"), t.stringLiteral(modulePath)),
-                    //         t.objectProperty(t.identifier("type"), t.stringLiteral(type)),
-                    //     ]),
-                    // ]);
-                    // const st = t.expressionStatement(callExp);
-                    // st.__blockHoist = Infinity;
-                    // // (path.scope.path as bt.NodePath<t.Program>).unshiftContainer("body", st);
-                    // path.scope.path.node.body.unshift(st);
+                } else {
+                    const callIdentifier = t.isIdentifier(path.node.callee)
+                        ? path.node.callee
+                        : t.isMemberExpression(path.node.callee) && t.isIdentifier(path.node.callee.property)
+                            ? path.node.callee.property
+                            : undefined;
+                    if (!callIdentifier || !alwaysMockIdentifiers.includes(callIdentifier.name)) {
+                        return;
+                    }
+                    let identifierNode: t.Identifier | t.MemberExpression | undefined;
+                    let identifierBinding: bt.Binding | undefined;
+                    if (t.isCallExpression(path.node.callee)) {
+                        [identifierNode, identifierBinding] = processHocLikeCallExpression(path.node.callee, path.scope);
+                    }
+                    if (!identifierNode) {
+                        [identifierNode, identifierBinding] = processHocLikeCallExpression(path.node, path.scope);
+                    }
+                    if (!identifierNode || !identifierBinding || identifierBinding.kind !== "module") {
+                        return;
+                    }
+                    const identifierFullName = getFullNameOfIdentifier(identifierNode);
+                    if (this.mockedIdentifiers.includes(identifierFullName)) {
+                        return;
+                    }
+                    if (!this.mockExpression) {
+                        this.mockExpression = createEmptyMockExpression(identifierBinding.scope);
+                    }
+                    pushMockObjExpression(this.mockExpression, identifierFullName, identifierBinding);
+                    this.mockedIdentifiers.push(identifierFullName);
                 }
             },
             JSXOpeningElement(path) {
@@ -236,23 +277,9 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                     return;
                 }
                 if (!this.mockExpression) {
-                    this.mockExpression = t.exportNamedDeclaration(t.variableDeclaration("const", [t.variableDeclarator(t.identifier("Mocks"), t.arrayExpression([]))]), []);
-                    if (identifierBinding.scope.path.isProgram()) {
-                        identifierBinding.scope.path.node.body.push(this.mockExpression);
-                    }
+                    this.mockExpression = createEmptyMockExpression(identifierBinding.scope);
                 }
-                const exportDecl = (this.mockExpression.declaration as b.types.VariableDeclaration).declarations[0].init as b.types.ArrayExpression;
-                exportDecl.elements.push(t.objectExpression([
-                    t.objectProperty(t.identifier("identifier"), t.stringLiteral(identifierFullName)),
-                    t.objectProperty(t.identifier("path"), t.stringLiteral((identifierBinding.path.parent as t.ImportDeclaration).source.value)),
-                    t.objectProperty(t.identifier("type"), t.stringLiteral(
-                        identifierBinding.path.isImportDefaultSpecifier()
-                            ? "default"
-                            : identifierBinding.path.isImportNamespaceSpecifier()
-                                ? "namespace"
-                                : "name",
-                    ))
-                ]))
+                pushMockObjExpression(this.mockExpression, identifierFullName, identifierBinding);
                 this.mockedIdentifiers.push(identifierFullName);
             },
         }

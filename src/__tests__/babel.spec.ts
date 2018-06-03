@@ -556,6 +556,50 @@ describe("For component like source", () => {
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
     });
+
+    it("Works for alwaysMockIdentifiers without JSX opening element", () => {
+        const source = `
+        import A from "a";
+        import { B } from "../b";
+        import C from "c";
+        import D from "d";
+        import styled from "styled";
+
+        const StyledA = styled(A)\`\`;
+        const StyledB = styled(A.B);
+        const StyledC = styled(A.C, {});
+        const StyledD = styled(A.D, {})\`font-size: 8em;\`;
+
+        const B1 = A.withComponent(C.C1);
+        const B2 = styled(D) \`\`;
+
+        const B3 = nonStyled(C.C2);
+        `;
+
+        expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
+        expect(transform(source, { babelrc: false, plugins: ["@babel/transform-modules-commonjs", "emotion", plugin], presets: ["@babel/react"], filename: "test.jsx" }).code).toMatchSnapshot();
+        expect(transform(source, {
+            babelrc: false,
+            plugins: ["emotion", plugin],
+            presets: [
+                "@babel/react",
+                ["@babel/env", {
+                    targets: {
+                        browsers: [
+                            ">0.25%",
+                            "not dead",
+                            "ie 11",
+                            "not op_mini all"
+                        ],
+                    },
+                    // loose: true,
+                    modules: "commonjs",
+                    useBuiltIns: "usage",
+                }]
+            ],
+            filename: "test.jsx"
+        }).code).toMatchSnapshot();
+    })
 });
 
 describe("For test like source", () => {

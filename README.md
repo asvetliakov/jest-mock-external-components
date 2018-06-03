@@ -1,8 +1,8 @@
-## Easy automock your react components
+## Easy automock your external react components
 
-Do you like write component tests? Do you like react-test-renderer more than shallow renderer? Do you feel sometimes that it would be great to combine both shallow renderer and react-test-renderer to prevent rendering inner components? Do you feel headcache when writing tests for something like [styled-components](https://www.styled-components.com/) ?
+Do you like write component tests? Do you like react-test-renderer more than shallow renderer? Do you feel sometimes that it would be great to combine both shallow renderer and react-test-renderer to prevent rendering inner components? Do you feel headcache when writing tests for something like [styled-components](https://www.styled-components.com/) ? Are you bored to write numerous ```jest.mock()``` calls to mock your component?
 
-If answer for these all questions is "Yes" then you come to the right place.
+If the answer for any of these questions is "Yes" then you come to the right place.
 
 
 Much often, you want to mock/don't render external components. Almost always these external components are being imported through import statement ```import A from "./a"```. And very often you want to full render the inner (helpers or styled) components:
@@ -90,15 +90,22 @@ Ideally, you want this snapshot:
 
 ```
 
-This is achievable by mocking components using ```jest.mock()``` but this is boring and repetetive task, especially when you have to mock many components.
+This is achievable by mocking components using ```jest.mock()``` but this is boring and repetetive task, especially when you have to mock many components:
+
+```jsx
+    jest.mock("../AnotherComp", () => "AnotherComp");
+    jest.mock("../Button", () => "Button");
+    jest.mock("../SomeComp", () => ({ SomeComp: "SomeComp" })); // very ugly for named exports
+    // etc...
+```
 
 Finally, now you can just use ```jest-mock-external-components```:
 
-```js
+```jsx
 import Component from "../mycomponent";
 import { mockExternalComponents } from "jest-mock-external-components";
 mockExteralComponents(Component);
-// will mock <Button /> and <AnotherComp />
+// will automatically mock <Button /> and <AnotherComp />
 
 // Use react-test-renderer
 const t = create(<Component />);
@@ -122,4 +129,4 @@ Add to your ```.babelrc``` / ```.babelrc.js``` / ```babel.config.js```
 ```
 
 ## Caveats
-After mocking, at beginning of the test file the ```jest.resetModules()``` will be called. Make sure you won't set internal state somewhere before (for example in setupFiles/setupTestFrameworkFile)
+After mocking, at beginning of the test file the ```jest.resetModules()``` will be called. Make sure you are not setting internal state somewhere before (for example in setupFiles/setupTestFrameworkFile)

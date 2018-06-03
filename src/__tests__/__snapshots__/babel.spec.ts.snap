@@ -1023,6 +1023,188 @@ const Mocks = [{
 exports.Mocks = Mocks;"
 `;
 
+exports[`For component like source Works for alwaysMockIdentifiers without JSX opening element 1`] = `
+"import A from \\"a\\";
+import { B } from \\"../b\\";
+import C from \\"c\\";
+import D from \\"d\\";
+import styled from \\"styled\\";
+const StyledA = styled(A)\`\`;
+const StyledB = styled(A.B);
+const StyledC = styled(A.C, {});
+const StyledD = styled(A.D, {})\`font-size: 8em;\`;
+const B1 = A.withComponent(C.C1);
+const B2 = styled(D)\`\`;
+const B3 = nonStyled(C.C2);
+export const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"D\\",
+  path: \\"d\\",
+  type: \\"default\\"
+}];"
+`;
+
+exports[`For component like source Works for alwaysMockIdentifiers without JSX opening element 2`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _b = require(\\"../b\\");
+
+var _c = _interopRequireDefault(require(\\"c\\"));
+
+var _d = _interopRequireDefault(require(\\"d\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+const StyledB = (0, _styled.default)(_a.default.B);
+const StyledC = (0, _styled.default)(_a.default.C, {});
+const StyledD =
+/*#__PURE__*/
+(0, _styled.default)(_a.default.D, {
+  target: \\"e1h80wsp1\\"
+})(\\"font-size:8em;\\");
+
+const B1 = _a.default.withComponent(_c.default.C1, {
+  target: \\"e1h80wsp2\\"
+});
+
+const B2 =
+/*#__PURE__*/
+(0, _styled.default)(_d.default, {
+  target: \\"e1h80wsp3\\"
+})();
+const B3 = nonStyled(_c.default.C2);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"D\\",
+  path: \\"d\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
+exports[`For component like source Works for alwaysMockIdentifiers without JSX opening element 3`] = `
+"\\"use strict\\";
+
+Object.defineProperty(exports, \\"__esModule\\", {
+  value: true
+});
+exports.Mocks = void 0;
+
+var _a = _interopRequireDefault(require(\\"a\\"));
+
+var _b = require(\\"../b\\");
+
+var _c = _interopRequireDefault(require(\\"c\\"));
+
+var _d = _interopRequireDefault(require(\\"d\\"));
+
+var _styled = _interopRequireDefault(require(\\"styled\\"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var StyledA =
+/*#__PURE__*/
+(0, _styled.default)(_a.default, {
+  target: \\"e1h80wsp0\\"
+})();
+var StyledB = (0, _styled.default)(_a.default.B);
+var StyledC = (0, _styled.default)(_a.default.C, {});
+var StyledD =
+/*#__PURE__*/
+(0, _styled.default)(_a.default.D, {
+  target: \\"e1h80wsp1\\"
+})(\\"font-size:8em;\\");
+
+var B1 = _a.default.withComponent(_c.default.C1, {
+  target: \\"e1h80wsp2\\"
+});
+
+var B2 =
+/*#__PURE__*/
+(0, _styled.default)(_d.default, {
+  target: \\"e1h80wsp3\\"
+})();
+var B3 = nonStyled(_c.default.C2);
+const Mocks = [{
+  identifier: \\"A\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.B\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.C\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"A.D\\",
+  path: \\"a\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"C.C1\\",
+  path: \\"c\\",
+  type: \\"default\\"
+}, {
+  identifier: \\"D\\",
+  path: \\"d\\",
+  type: \\"default\\"
+}];
+exports.Mocks = Mocks;"
+`;
+
 exports[`For component like source Works for member expression without HOC 1`] = `
 "import A from \\"a\\";
 import * as B from \\"b\\";
