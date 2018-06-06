@@ -263,7 +263,7 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                                 [identifierNode, identifierBinding] = processHocLikeCallExpression(callExp.callee, binding.path.scope);
                             }
                             // otherwise process normally
-                            if (!identifierNode) {
+                            if (!identifierNode && !t.isCallExpression(callExp.callee)) {
                                 [identifierNode, identifierBinding] = processHocLikeCallExpression(callExp, binding.path.scope);
                             }
                         }

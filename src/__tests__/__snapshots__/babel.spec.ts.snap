@@ -145,10 +145,24 @@ exports[`For component like source Does not import inside in tagged template 1`]
 "import A from \\"a\\";
 import styled from \\"styled\\";
 import theme from \\"../theme\\";
+import { someFunc, someVal } from \\"./some\\";
 const StyledA = styled(A)\`
             color: \${theme.color.black};
         \`;
+const StyledB = styled(\\"div\\")\`
+            height: \${theme.elements.someHeight};
+            width: \${theme.elements.someWidth};
+        \`;
+const StyledC = styled(\\"div\\")\`\${theme.someFunc()}\`;
+const StyledD = styled(\\"div\\")\`\${someFunc()}\`;
+const StyledE = styled(\\"div\\")\`\${() => someFunc()}\`;
+const StyledF = styled(\\"div\\")\`\${someVal}\`;
 React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
 export const Mocks = [{
   identifier: \\"A\\",
   path: \\"a\\",
@@ -170,6 +184,8 @@ var _styled = _interopRequireDefault(require(\\"styled\\"));
 
 var _theme = _interopRequireDefault(require(\\"../theme\\"));
 
+var _some = require(\\"./some\\");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const StyledA =
@@ -177,7 +193,37 @@ const StyledA =
 (0, _styled.default)(_a.default, {
   target: \\"e1h80wsp0\\"
 })(\\"color:\\", _theme.default.color.black, \\";\\");
+const StyledB =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp1\\"
+})(\\"height:\\", _theme.default.elements.someHeight, \\";width:\\", _theme.default.elements.someWidth, \\";\\");
+const StyledC =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp2\\"
+})(_theme.default.someFunc());
+const StyledD =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp3\\"
+})((0, _some.someFunc)());
+const StyledE =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp4\\"
+})(() => (0, _some.someFunc)());
+const StyledF =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp5\\"
+})(_some.someVal);
 React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
 const Mocks = [{
   identifier: \\"A\\",
   path: \\"a\\",
@@ -298,6 +344,8 @@ var _styled = _interopRequireDefault(require(\\"styled\\"));
 
 var _theme = _interopRequireDefault(require(\\"../theme\\"));
 
+var _some = require(\\"./some\\");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var StyledA =
@@ -305,7 +353,39 @@ var StyledA =
 (0, _styled.default)(_a.default, {
   target: \\"e1h80wsp0\\"
 })(\\"color:\\", _theme.default.color.black, \\";\\");
+var StyledB =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp1\\"
+})(\\"height:\\", _theme.default.elements.someHeight, \\";width:\\", _theme.default.elements.someWidth, \\";\\");
+var StyledC =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp2\\"
+})(_theme.default.someFunc());
+var StyledD =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp3\\"
+})((0, _some.someFunc)());
+var StyledE =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp4\\"
+})(function () {
+  return (0, _some.someFunc)();
+});
+var StyledF =
+/*#__PURE__*/
+(0, _styled.default)(\\"div\\", {
+  target: \\"e1h80wsp5\\"
+})(_some.someVal);
 React.createElement(StyledA, null);
+React.createElement(StyledB, null);
+React.createElement(StyledC, null);
+React.createElement(StyledD, null);
+React.createElement(StyledE, null);
+React.createElement(StyledF, null);
 const Mocks = [{
   identifier: \\"A\\",
   path: \\"a\\",

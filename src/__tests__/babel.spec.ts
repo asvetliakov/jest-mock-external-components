@@ -149,13 +149,29 @@ describe("For component like source", () => {
         import A from "a";
         import styled from "styled";
         import theme from "../theme";
+        import { someFunc, someVal } from "./some";
 
         const StyledA = styled(A)\`
             color: \${theme.color.black};
         \`;
 
+        const StyledB = styled("div") \`
+            height: \${theme.elements.someHeight};
+            width: \${theme.elements.someWidth};
+        \`;
+
+        const StyledC = styled("div") \`\${theme.someFunc()}\`;
+        const StyledD = styled("div") \`\${someFunc()}\`;
+        const StyledE = styled("div") \`\${() => someFunc()}\`;
+        const StyledF = styled("div") \`\${someVal}\`;
+
 
         <StyledA />;
+        <StyledB />;
+        <StyledC />;
+        <StyledD />;
+        <StyledE />;
+        <StyledF />;
         `;
 
         expect(transform(source, { babelrc: false, plugins: [plugin], presets: ["@babel/react"] }).code).toMatchSnapshot();
