@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Does not append imported if not used in HOC as argument 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "C.A.B",
+    "path": "../c",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Does not import inside in tagged template 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Does not import inside in tagged template 2 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "some-lib",
+    "type": "name",
+  },
+  Object {
+    "identifier": "B",
+    "path": "some-lib",
+    "type": "name",
+  },
+]
+`;
+
+exports[`Real source 1 1`] = `
+Array [
+  Object {
+    "identifier": "ModalHeader",
+    "path": "@ramble/ramble-ui",
+    "type": "name",
+  },
+  Object {
+    "identifier": "ModalCloseIcon",
+    "path": "@ramble/ramble-ui",
+    "type": "name",
+  },
+]
+`;
+
+exports[`Real source 2 1`] = `
+Array [
+  Object {
+    "identifier": "Scrollbar",
+    "path": "react-smooth-scrollbar",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Real source 3 1`] = `
+Array [
+  Object {
+    "identifier": "HeaderDropdownMenu",
+    "path": "../HeaderDropdownMenu",
+    "type": "name",
+  },
+]
+`;
+
+exports[`Works for HOC like components 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.B",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.C",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.D",
+    "path": "a",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Works for JSX expressions 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.A1",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "B",
+    "path": "../b",
+    "type": "name",
+  },
+  Object {
+    "identifier": "B.B1",
+    "path": "../b",
+    "type": "name",
+  },
+  Object {
+    "identifier": "C.C1",
+    "path": "c/test",
+    "type": "namespace",
+  },
+  Object {
+    "identifier": "C.C1.C2",
+    "path": "c/test",
+    "type": "namespace",
+  },
+  Object {
+    "identifier": "C.C2.C3.C4",
+    "path": "c/test",
+    "type": "namespace",
+  },
+]
+`;
+
+exports[`Works for alwaysMockIdentifiers without JSX opening element 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.B",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.C",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "A.D",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "C.C1",
+    "path": "c",
+    "type": "default",
+  },
+  Object {
+    "identifier": "D",
+    "path": "d",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Works for member expression without HOC 1`] = `
+Array [
+  Object {
+    "identifier": "A.B",
+    "path": "a",
+    "type": "default",
+  },
+  Object {
+    "identifier": "B.C.D",
+    "path": "b",
+    "type": "namespace",
+  },
+]
+`;
+
+exports[`Works for nested member expressions inside HOC 1`] = `
+Array [
+  Object {
+    "identifier": "A.B.C",
+    "path": "a",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Works when HOC component was used in HOC for other component 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "default",
+  },
+]
+`;
+
+exports[`Works with TS annotations 1`] = `
+Array [
+  Object {
+    "identifier": "A",
+    "path": "a",
+    "type": "name",
+  },
+]
+`;

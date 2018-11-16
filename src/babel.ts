@@ -1,13 +1,9 @@
 import * as b from "@babel/core";
 import * as t from "@babel/types";
-import * as bt from "@babel/traverse";
 
 export interface State {
     isTestLike: boolean;
-
-    mockExpression?: t.ExportNamedDeclaration;
-
-    mockedIdentifiers: string[];
+    mockedPaths: string[];
 }
 
 export interface Options {
@@ -15,31 +11,10 @@ export interface Options {
     alwaysMockIdentifiers?: string[];
 }
 
-const defaultAlwaysMockIdentifiers = [
-    "styled",
-    "withComponent"
-];
-
 export default function plugin({ types: t, template: tmpl }: typeof b, options: Options = {}): b.PluginObj<State> {
 
     const mockExternalIdentifier = options.mockExternalIdentifier || "mockExternalComponents";
-    const alwaysMockIdentifiers = options.alwaysMockIdentifiers || defaultAlwaysMockIdentifiers;
 
-    const createNewIdentifierOrMemberExp = (node: t.Identifier | t.MemberExpression | t.JSXIdentifier | t.JSXMemberExpression): t.Identifier | t.MemberExpression => {
-        if (t.isIdentifier(node) || t.isJSXIdentifier(node)) {
-            return t.identifier(node.name);
-        }
-        return t.memberExpression(
-            createNewIdentifierOrMemberExp(node.object as t.Identifier | t.MemberExpression),
-            t.identifier((node.property as t.Identifier).name),
-        );
-    }
-    const getMostLeftJSXIdentifier = (exp: t.JSXMemberExpression): t.JSXIdentifier => {
-        if (t.isJSXIdentifier(exp.object)) {
-            return exp.object;
-        }
-        return getMostLeftJSXIdentifier(exp.object);
-    }
     const getMostLeftIdentifier = (exp: t.Node): t.Identifier | undefined => {
         if (!t.isMemberExpression(exp)) {
             return;
@@ -49,91 +24,18 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
         }
         return getMostLeftIdentifier(exp.object);
     }
-    const getFullNameOfIdentifier = (exp: t.JSXMemberExpression | t.JSXIdentifier | t.Identifier | t.MemberExpression): string => {
-        if (t.isIdentifier(exp) || t.isJSXIdentifier(exp)) {
-            return exp.name;
-        }
-        return getFullNameOfIdentifier(exp.object as t.MemberExpression | t.Identifier) + `.${(exp.property as t.Identifier).name}`;
-    }
-
-    const processHocLikeCallExpression = (exp: t.CallExpression, scope: bt.Scope): [t.Identifier | t.MemberExpression | undefined, bt.Binding | undefined] => {
-        if (!exp.arguments.length) {
-            return [undefined, undefined];
-        }
-        // get first identifier or member exp, for HOC this is most common case, don't want to bother with anothers
-        const firstArg: t.MemberExpression | t.Identifier | undefined = exp.arguments.find(a => t.isIdentifier(a) || t.isMemberExpression(a)) as any;
-        if (!firstArg) {
-            return [undefined, undefined];
-        }
-        const identifier = t.isIdentifier(firstArg) ? firstArg : getMostLeftIdentifier(firstArg);
-        if (!identifier) {
-            return [undefined, undefined];
-        }
-        const binding = scope.getBinding(identifier.name);
-        if (!binding) {
-            return [undefined, undefined];
-        }
-        if (binding.kind === "module") {
-            // direct binding to module, return used binding
-            return [firstArg, binding];
-        } else {
-            // import B;
-            // const A = HOC(B);
-            // const C = HOC(A);
-            // <C />
-            // need to process again
-            if (!binding.path.isVariableDeclarator() || !(t.isTaggedTemplateExpression(binding.path.node.init) || t.isCallExpression(binding.path.node.init))) {
-                return [undefined, undefined];
-            }
-            const init = binding.path.node.init;
-            if (t.isTaggedTemplateExpression(init) && !t.isCallExpression(init.tag)) {
-                return [undefined, undefined];
-            }
-            let callExp = t.isCallExpression(init) ? init : init.tag as t.CallExpression;
-            // const A = (0, _someHOC)(_ImportedComponent)(" styles ") - often as result of styled components preprocessors
-            if (t.isCallExpression(callExp.callee)) {
-                callExp = callExp.callee;
-            }
-            return processHocLikeCallExpression(callExp, binding.path.scope);
-        }
-    }
-
-    const createEmptyMockExpression = (scope: bt.Scope): t.ExportNamedDeclaration => {
-        const mockExpression = t.exportNamedDeclaration(t.variableDeclaration("const", [t.variableDeclarator(t.identifier("Mocks"), t.arrayExpression([]))]), []);
-        if (scope.path.isProgram()) {
-            scope.path.node.body.push(mockExpression);
-        }
-        return mockExpression;
-    }
-
-    const pushMockObjExpression = (mockExp: t.ExportNamedDeclaration, name: string, binding: bt.Binding): void => {
-        const exportDecl = (mockExp.declaration as b.types.VariableDeclaration).declarations[0].init as b.types.ArrayExpression;
-        exportDecl.elements.push(t.objectExpression([
-            t.objectProperty(t.identifier("identifier"), t.stringLiteral(name)),
-            t.objectProperty(t.identifier("path"), t.stringLiteral((binding.path.parent as t.ImportDeclaration).source.value)),
-            t.objectProperty(t.identifier("type"), t.stringLiteral(
-                binding.path.isImportDefaultSpecifier()
-                    ? "default"
-                    : binding.path.isImportNamespaceSpecifier()
-                        ? "namespace"
-                        : "name",
-            ))
-        ]));
-    }
 
     const mockHelper = tmpl(`
     (function() {
         const { mockExternalComponents } = require.requireActual("jest-mock-external-components");
-        const mocks = mockExternalComponents({}, OBJECT_EXP);
-        for (const mock of mocks) {
-            jest.doMock(mock.path, mock.definition);
-        }
+        mockExternalComponents(COMPONENT_PATH, TEST_PATH);
     })();
-    `, { placeholderPattern: false, placeholderWhitelist: new Set(["OBJECT_EXP"]) } as any);
+    `, { placeholderPattern: false, placeholderWhitelist: new Set(["COMPONENT_PATH", "TEST_PATH"]) } as any);
     return {
         pre() {
             this.isTestLike = false;
-            this.mockedIdentifiers = [];
+            this.mockedPaths = [];
+            // this.mockedIdentifiers = [];
         },
         visitor: {
             ImportDeclaration(path) {
@@ -165,122 +67,20 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
                     if (!binding || binding.kind !== "module") {
                         return;
                     }
-                    const type = binding.path.isImportDefaultSpecifier() ? "default" : binding.path.isImportNamespaceSpecifier() ? "namespace" : "name";
                     const modulePath = (binding.path.parent as t.ImportDeclaration).source.value;
+                    if (this.mockedPaths.includes(modulePath)) {
+                        path.parentPath.remove();
+                        return;
+                    }
 
-                    // add definition
-                    const objExp = t.objectExpression([
-                        t.objectProperty(t.identifier("identifier"), t.stringLiteral(firstArgIdentifierName)),
-                        t.objectProperty(t.identifier("path"), t.stringLiteral(modulePath)),
-                        t.objectProperty(t.identifier("type"), t.stringLiteral(type)),
-                        t.objectProperty(t.identifier("fullPath"), t.stringLiteral(state.filename || "")),
-                    ]);
-                    path.parentPath.replaceWith(mockHelper({ OBJECT_EXP: objExp }));
+                    path.parentPath.replaceWith(mockHelper({
+                        COMPONENT_PATH: t.stringLiteral(modulePath),
+                        TEST_PATH: t.stringLiteral(state.filename || ""),
+                    }) as any);
+                    this.mockedPaths.push(modulePath);
 
                     (path.parentPath.node as any)._blockHoist = 4;
-                } else {
-                    const callIdentifier = t.isIdentifier(path.node.callee)
-                        ? path.node.callee
-                        : t.isMemberExpression(path.node.callee) && t.isIdentifier(path.node.callee.property)
-                            ? path.node.callee.property
-                            : undefined;
-                    if (!callIdentifier || !alwaysMockIdentifiers.includes(callIdentifier.name)) {
-                        return;
-                    }
-                    let identifierNode: t.Identifier | t.MemberExpression | undefined;
-                    let identifierBinding: bt.Binding | undefined;
-                    if (t.isCallExpression(path.node.callee)) {
-                        [identifierNode, identifierBinding] = processHocLikeCallExpression(path.node.callee, path.scope);
-                    }
-                    if (!identifierNode) {
-                        [identifierNode, identifierBinding] = processHocLikeCallExpression(path.node, path.scope);
-                    }
-                    if (!identifierNode || !identifierBinding || identifierBinding.kind !== "module") {
-                        return;
-                    }
-                    const identifierFullName = getFullNameOfIdentifier(identifierNode);
-                    if (this.mockedIdentifiers.includes(identifierFullName)) {
-                        return;
-                    }
-                    if (!this.mockExpression) {
-                        this.mockExpression = createEmptyMockExpression(identifierBinding.scope);
-                    }
-                    pushMockObjExpression(this.mockExpression, identifierFullName, identifierBinding);
-                    this.mockedIdentifiers.push(identifierFullName);
                 }
-            },
-            JSXOpeningElement(path) {
-                if (this.isTestLike) {
-                    return;
-                }
-                let identifierNode: t.MemberExpression | t.Identifier | t.JSXMemberExpression | t.JSXIdentifier | undefined;
-                let identifierBinding: bt.Binding | undefined;
-                // <A.B.C /> this can be mapped only to imported module
-                if (t.isJSXMemberExpression(path.node.name)) {
-                    const mostLeftIdentifier = getMostLeftJSXIdentifier(path.node.name);
-                    const binding = path.scope.getBinding(mostLeftIdentifier.name);
-                    if (!binding || binding.kind !== "module") {
-                        return;
-                    }
-                    identifierNode = path.node.name;
-                    identifierBinding = binding;
-                } else if (t.isJSXIdentifier(path.node.name)) {
-                    const identifier = path.node.name.name;
-                    const binding = path.scope.getBinding(identifier);
-                    if (!binding) {
-                        return;
-                    }
-                    if (binding.kind === "module") {
-                        // direct use if imported component
-                        identifierNode = path.node.name;
-                        identifierBinding = binding;
-                    } else {
-                        // may be hoc
-                        // 1) const Styled = styled(A)``
-                        // 2) const A = HOC(B);
-                        // 3) const C = A.B.C; // member access shorthand
-                        if (!binding.path.isVariableDeclarator()) {
-                            return;
-                        }
-                        const init = binding.path.node.init;
-                        if (t.isIdentifier(init) || t.isMemberExpression(init)) {
-                            identifierNode = init;
-                            const leftIdentifier = getMostLeftIdentifier(identifierNode);
-                            if (leftIdentifier) {
-                                const newBinding = binding.path.scope.getBinding(leftIdentifier.name);
-                                if (newBinding && newBinding.kind === "module") {
-                                    identifierBinding = newBinding;
-                                }
-                            }
-                        } else if (t.isTaggedTemplateExpression(init) || t.isCallExpression(init)) {
-                            if (t.isTaggedTemplateExpression(init) && !t.isCallExpression(init.tag)) {
-                                return;
-                            }
-                            let callExp = t.isTaggedTemplateExpression(init) ? init.tag as t.CallExpression : init;
-                            if (t.isCallExpression(callExp.callee)) {
-                                // const A = (0, _someHOC)(_ImportedComponent)(" styles ") - often as result of styled components preprocessors
-                                // note: need to first process inner call expression, otherwise it may not work - see "Does not import inside in taggle template" test
-                                [identifierNode, identifierBinding] = processHocLikeCallExpression(callExp.callee, binding.path.scope);
-                            }
-                            // otherwise process normally
-                            if (!identifierNode && !t.isCallExpression(callExp.callee)) {
-                                [identifierNode, identifierBinding] = processHocLikeCallExpression(callExp, binding.path.scope);
-                            }
-                        }
-                    }
-                }
-                if (!identifierNode || !identifierBinding || identifierBinding.kind !== "module") {
-                    return;
-                }
-                const identifierFullName = getFullNameOfIdentifier(identifierNode);
-                if (this.mockedIdentifiers.includes(identifierFullName)) {
-                    return;
-                }
-                if (!this.mockExpression) {
-                    this.mockExpression = createEmptyMockExpression(identifierBinding.scope);
-                }
-                pushMockObjExpression(this.mockExpression, identifierFullName, identifierBinding);
-                this.mockedIdentifiers.push(identifierFullName);
             },
         }
     }
