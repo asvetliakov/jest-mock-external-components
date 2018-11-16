@@ -127,6 +127,3 @@ Add to your ```.babelrc``` / ```.babelrc.js``` / ```babel.config.js```
         "jest-mock-external-components/babel",
     ]
 ```
-
-## Caveats
-After mocking, at beginning of the test file the ```jest.resetModules()``` will be called. Make sure you are not setting internal state somewhere before (for example in setupFiles/setupTestFrameworkFile)
