@@ -220,6 +220,8 @@ export function getMocks(code: string, type: "flow" | "typescript", alwaysMock: 
                 type,
                 "asyncGenerators",
                 "classProperties",
+                "classPrivateProperties",
+                "classPrivateMethods",
                 ["decorators", { decoratorsBeforeExport: true }] as any,
                 "doExpressions",
                 "dynamicImport",
@@ -231,6 +233,8 @@ export function getMocks(code: string, type: "flow" | "typescript", alwaysMock: 
                 "exportNamespaceFrom",
                 "importMeta",
                 "optionalCatchBinding",
+                "optionalChaining",
+                "nullishCoalescingOperator"
             ],
         });
         if (!ast) {
