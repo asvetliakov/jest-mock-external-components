@@ -4,8 +4,7 @@ exports[`Does not do anything for non imported identifier 1`] = `
 "(function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 
@@ -23,8 +22,7 @@ exports[`Does not do anything for non imported identifier 2`] = `
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 
@@ -43,24 +41,21 @@ exports[`Process mockExternalComponents call 1`] = `
 "(function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"b\\", \\"/test.jsx\\");
 })();
 
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../../c\\", \\"/test.jsx\\");
 })();
 
@@ -79,24 +74,21 @@ exports[`Process mockExternalComponents call 2`] = `
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"b\\", \\"/test.jsx\\");
 })();
 
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../../c\\", \\"/test.jsx\\");
 })();
 
@@ -125,8 +117,7 @@ exports[`Works for 2 identifiers from same file 1`] = `
 "(function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 
@@ -142,8 +133,7 @@ exports[`Works for 2 identifiers from same file 2`] = `
 (function () {
   const {
     mockExternalComponents
-  } = require.requireActual(\\"jest-mock-external-components\\");
-
+  } = jest.requireActual(\\"jest-mock-external-components\\");
   mockExternalComponents(\\"../a\\", \\"/test.jsx\\");
 })();
 

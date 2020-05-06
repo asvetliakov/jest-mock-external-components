@@ -27,7 +27,7 @@ export default function plugin({ types: t, template: tmpl }: typeof b, options: 
 
     const mockHelper = tmpl(`
     (function() {
-        const { mockExternalComponents } = require.requireActual("jest-mock-external-components");
+        const { mockExternalComponents } = jest.requireActual("jest-mock-external-components");
         mockExternalComponents(COMPONENT_PATH, TEST_PATH);
     })();
     `, { placeholderPattern: false, placeholderWhitelist: new Set(["COMPONENT_PATH", "TEST_PATH"]) } as any);
