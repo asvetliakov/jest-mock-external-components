@@ -65,7 +65,7 @@ export function mockExternalComponents(componentPath: string, testPath?: string)
             if (flattenMocks[mockPath] && flattenMocks[mockPath].length) {
                 // const newPath = path.join(mainDirPath, mock.path);
                 jest.doMock(newPath, () => {
-                    const actual = require.requireActual(newPath);
+                    const actual = jest.requireActual(newPath);
                     let mockedModule = { ...actual };
                     Object.defineProperty(mockedModule, "__esModule", { value: true });
                     const mocks = flattenMocks[mockPath];
